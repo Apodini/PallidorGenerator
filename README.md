@@ -1,46 +1,41 @@
-## How to use this repository
-### Template
-When creating a new repository make sure to select this repository as a repository template. ![](https://github.com/Apodini/Template-Repository/raw/develop/Images/RepositoryTemplate.png)
+# PallidorGenerator
 
-### Customize the repository
-Enter your repository specific configuration
-- Enter your project name instead of "PROJECT_NAME" in .jazzy.yml
-- Remove the "Images" folder
-- Replace the "Package.swift", "Sources" and "Tests" folder with your own Swift Package
-- Update the README with your information
+<p align="center">
+  <img width="150" src="https://github.com/tum-aweink/PallidorGenerator/blob/develop/Images/pallidor-icon.png">
+</p>
 
-
-### GitHub Actions
-This repository contains several workflows which require you to provide a GitHub Secret. Secrets are encrypted environment variables that you create in a repository for use with GitHub Actions.
-
-#### 1. Create a personal access token
-- Go to your token settings in GitHub (click on `Settings` in the user drop-down menu, then `Developer` settings in the sidebar, then click on `Personal access tokens`)
-- Then click the `Generate token` button.
-- Make sure to copy the access token
-
-![](https://github.com/Apodini/Template-Repository/raw/develop/Images/AccessToken.png)
-
-#### 2. Create a secret
-Next, you’ll need to add a new secret to your repository.
-
-- Open the settings for your repository and click `Secrets` in the sidebar
-- Click `Add a new secret` and set the name to `ACCESS_TOKEN`
-- Paste the copied personal access token into  `Value`
-- Click `Add secret`
-
-![](https://github.com/Apodini/Template-Repository/raw/release/Images/Secret.png)
-
-#### 3. Test all available GitHub Actions
-
-### ⬆️ Remove everything up to here ⬆️
-
-# Project Name
+<p align="center">
+    <a href="LICENSE">
+        <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
+    </a>
+    <a href="https://swift.org">
+        <img src="https://img.shields.io/badge/Swift-5.3-blue.svg" alt="Swift 5.2">
+    </a>
+</p>
 
 ## Requirements
-
-## Installation/Setup/Integration
+This library requires at least Swift 5.3 and macOS 10.15.
+## Integration
+To integrate the `PallidorGenerator` library in your SwiftPM project, add the following line to the dependencies in your `Package.swift` file:
+```swift
+.package(url: "https://github.com/tum-aweink/PallidorGenerator.git", .branch("master"))
+```
+Because `PallidorGenerator` is currently under active development, there is no guarantee for source-stability.
 
 ## Usage
+To get started with `PallidorGenerator` you first need to create an instance of it, providing the path to the directory in which the source files are located, as well as the path to the location of the migration guide:
+```swift
+var specification : URL = ...
+let generator = try PallidorGenerator(specification: specification)
+```
+To start generating the OpenAPI library, you need to call the `generate()` method, providing a `Path` to the target directory where the generated files should be located and a `name` for the package.
+```swift
+var path: Path = ...
+var packageName: String = ...
+try generator.generate(target: path, package: packageName)
+```
+All generated API files will be located under `{targetDirectory}/Models` or `{targetDirectory}/APIs`.
+Additionally several meta files which are required for a SPM library are also generated and located under their respective folder in `{targetDirectory}`.
 
 ## Contributing
 Contributions to this projects are welcome. Please make sure to read the [contribution guidelines](https://github.com/Apodini/.github/blob/release/CONTRIBUTING.md) first.
