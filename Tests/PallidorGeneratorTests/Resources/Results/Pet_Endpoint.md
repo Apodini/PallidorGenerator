@@ -13,7 +13,7 @@ Responses:
    - 200: Successful operation
    - 405: Invalid input
 */
-public static func addPet(element: _Pet, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
+static func addPet(element: _Pet, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
 let path = NetworkManager.basePath! + "/pet"
     
 
@@ -42,7 +42,7 @@ let path = NetworkManager.basePath! + "/pet"
 Responses:
    - 400: Invalid pet value
 */
-public static func deletePet(api_key: String?, petId: Int64, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<String, Error> {
+static func deletePet(api_key: String?, petId: Int64, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<String, Error> {
 var path = NetworkManager.basePath! + "/pet/{petId}"
     path = path.replacingOccurrences(of: "{petId}", with: String(petId))
 
@@ -72,7 +72,7 @@ Responses:
    - 200: successful operation
    - 400: Invalid status value
 */
-public static func findPetsByStatus(status: String?, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<[_Pet], Error> {
+static func findPetsByStatus(status: String?, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<[_Pet], Error> {
 var path = NetworkManager.basePath! + "/pet/findByStatus"
     
 path += "?\(status != nil ? "&status=\(status?.description ?? "")" : "")"
@@ -102,7 +102,7 @@ Responses:
    - 200: successful operation
    - 400: Invalid tag value
 */
-public static func findPetsByTags(tags: [String]?, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<[_Pet], Error> {
+static func findPetsByTags(tags: [String]?, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<[_Pet], Error> {
 var path = NetworkManager.basePath! + "/pet/findByTags"
     
 path += "?\(tags != nil ? "&tags=\(tags?.joined(separator: "&") ?? "")" : "")"
@@ -133,7 +133,7 @@ Responses:
    - 400: Invalid ID supplied
    - 404: Pet not found
 */
-public static func getPetById(petId: Int64, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
+static func getPetById(petId: Int64, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
 var path = NetworkManager.basePath! + "/pet/{petId}"
     path = path.replacingOccurrences(of: "{petId}", with: String(petId))
 
@@ -170,7 +170,7 @@ Responses:
    - 404: Pet not found
    - 405: Validation exception
 */
-public static func updatePet(element: _Pet, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
+static func updatePet(element: _Pet, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
 let path = NetworkManager.basePath! + "/pet"
     
 
@@ -205,7 +205,7 @@ if httpResponse.statusCode == 405 {
 Responses:
    - 405: Invalid input
 */
-public static func updatePetWithForm(name: String, petId: Int64, status: String, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<String, Error> {
+static func updatePetWithForm(name: String, petId: Int64, status: String, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<String, Error> {
 var path = NetworkManager.basePath! + "/pet/{petId}"
     path = path.replacingOccurrences(of: "{petId}", with: String(petId))
 path += "?name=\(name.description)&status=\(status.description)"
@@ -234,7 +234,7 @@ RequestBody:
 Responses:
    - 200: successful operation
 */
-public static func uploadFile(additionalMetadata: String?, petId: Int64, element: String?, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = "application/octet-stream") -> AnyPublisher<_ApiResponse, Error> {
+static func uploadFile(additionalMetadata: String?, petId: Int64, element: String?, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = "application/octet-stream") -> AnyPublisher<_ApiResponse, Error> {
 var path = NetworkManager.basePath! + "/pet/{petId}/uploadImage"
     path = path.replacingOccurrences(of: "{petId}", with: String(petId))
 path += "?\(additionalMetadata != nil ? "&additionalMetadata=\(additionalMetadata?.description ?? "")" : "")"

@@ -183,7 +183,7 @@ extension OperationModel : CustomStringConvertible {
             let isGeneric = NotOfResolver.isGeneric(type: successType)
             return """
             \(comment)
-            public static func \(operationId)\(isGeneric ? "<T : Codable>" : "")(\(parametersString.skipEmptyJoined(separator: ", "))) -> AnyPublisher<\(isGeneric ? "\(successType)<T>" : successType), Error> {
+            static func \(operationId)\(isGeneric ? "<T : Codable>" : "")(\(parametersString.skipEmptyJoined(separator: ", "))) -> AnyPublisher<\(isGeneric ? "\(successType)<T>" : successType), Error> {
             \(parameters != nil && !parameters!.isEmpty ? "var" : "let") path = NetworkManager.basePath! + "\(path.rawValue)"
                 \(pathParams != nil ? pathParams!.map({$0.opDescription}).joined(separator: "\n") : "")
             \(queryParams != nil && !queryParams!.isEmpty ? "path += \"?\(queryParams!.first!.required ? "\(queryParams!.map({$0.opDescription}).joined().dropFirst())\"" : "\(queryParams!.map({$0.opDescription}).joined())\"")" : "")

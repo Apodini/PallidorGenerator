@@ -4,7 +4,7 @@
 Responses:
    - 405: Invalid input
 */
-public static func updatePetWithForm(name: String, petId: Int64, status: String, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<String, Error> {
+static func updatePetWithForm(name: String, petId: Int64, status: String, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<String, Error> {
 var path = NetworkManager.basePath! + "/pet/{petId}"
     path = path.replacingOccurrences(of: "{petId}", with: String(petId))
 path += "?name=\(name.description)&status=\(status.description)"

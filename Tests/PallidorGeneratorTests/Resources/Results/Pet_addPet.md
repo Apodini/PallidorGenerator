@@ -6,7 +6,7 @@ Responses:
    - 200: Successful operation
    - 405: Invalid input
 */
-public static func addPet(element: _Pet, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
+static func addPet(element: _Pet, authorization: HTTPAuthorization = NetworkManager.authorization!, contentType: String? = NetworkManager.defaultContentType) -> AnyPublisher<_Pet, Error> {
 let path = NetworkManager.basePath! + "/pet"
     
 
