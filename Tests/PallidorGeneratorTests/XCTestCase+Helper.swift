@@ -5,11 +5,11 @@ import OpenAPIKit
 extension XCTestCase {
     
     enum Resources : String {
-        case petstore, lufthansa, wines, wines_any
+        case petstore, petstore_httpMethodChanged, lufthansa, wines, wines_any
     }
     
     enum Results : String {
-        case Pet, MessageLevel, PaymentInstallmentSchedule, PaymentInstallmentSchedule_Any, PeriodOfOperation, FlightAggregate, LH_GetPassengerFlights, Pet_addPet, Pet_updatePetWithForm, Pet_Endpoint
+        case Pet, MessageLevel, PaymentInstallmentSchedule, PaymentInstallmentSchedule_Any, PeriodOfOperation, FlightAggregate, LH_GetPassengerFlights, Pet_addPet, Pet_updatePetWithForm, Pet_Endpoint, Pet_updatePetChangedHTTPMethod
     }
     
     func readResult(_ resource: Results) -> String {

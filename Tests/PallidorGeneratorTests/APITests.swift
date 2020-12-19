@@ -18,6 +18,16 @@ class APITests: XCTestCase {
         XCTAssertEqual(test.description, readResult(.Pet_addPet))
     }
     
+    func testParseDefaultResultMethodNoAuth() {
+        initSUT(resource: .petstore_httpMethodChanged)
+        let test = sut!.getOperation("addPet", in: "Pet")!
+        // modify "authorization" parameter to be optional.
+        // uses authorized result of "addPet" method
+        var result = readResult(.Pet_addPet)
+        result = result.replacingOccurrences(of: "authorization: HTTPAuthorization = NetworkManager.authorization!", with: "authorization: HTTPAuthorization? = NetworkManager.authorization")
+        XCTAssertEqual(test.description, result)
+    }
+    
     func testParseSimpleResultMethod() {
         initSUT(resource: .petstore)
         let test = sut!.getOperation("updatePetWithForm", in: "Pet")!
@@ -28,6 +38,12 @@ class APITests: XCTestCase {
         initSUT(resource: .petstore)
         let test = sut!.getEndpoint("Pet")!
         XCTAssertEqual(test.description, readResult(.Pet_Endpoint))
+    }
+    
+    func testParseSimpleEndpointMethodChangedHTTPMethod() {
+        initSUT(resource: .petstore_httpMethodChanged)
+        let test = sut!.getOperation("updatePet", in: "Pet")!
+        XCTAssertEqual(test.description, readResult(.Pet_updatePetChangedHTTPMethod))
     }
     
     private func initSUT(resource: Resources) {
@@ -46,7 +62,8 @@ class APITests: XCTestCase {
         ("testParseTypeAliasResultMethod", testParseTypeAliasResultMethod),
         ("testParseDefaultResultMethod", testParseDefaultResultMethod),
         ("testParseSimpleResultMethod", testParseSimpleResultMethod),
-        ("testParseSimpleEndpointMethod", testParseSimpleEndpointMethod)
+        ("testParseSimpleEndpointMethod", testParseSimpleEndpointMethod),
+        ("testParseSimpleEndpointMethodChangedHTTPMethod", testParseSimpleEndpointMethodChangedHTTPMethod)
     ]
 
 }

@@ -47,7 +47,7 @@ struct PrimitiveTypeResolver {
             return resolveTypeFormat(context: context)
         case .integer(let context, _):
             return resolveTypeFormat(context: context)
-        case .string(let context, _):
+        case .string(let context, let string):
             return resolveTypeFormat(context: context)
         case .array(_, _):
             return ArrayResolver.resolveArrayItemType(schema: schema)
