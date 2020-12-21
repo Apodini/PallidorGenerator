@@ -45,6 +45,7 @@ let package = Package(
             resources: [
                 .process("Resources/petstore.md"),
                 .process("Resources/petstore_httpMethodChanged.md"),
+                .process("Resources/petstore_minMax.md"),
                 .process("Resources/lufthansa.md"),
                 .process("Resources/wines.md"),
                 .process("Resources/wines_any.md"),
@@ -59,6 +60,7 @@ let package = Package(
                 .process("Resources/Results/Pet_updatePetWithForm.md"),
                 .process("Resources/Results/Pet_Endpoint.md"),
                 .process("Resources/Results/Pet_updatePetChangedHTTPMethod.md"),
+                .process("Resources/Results/Pet_getPetByIdMinMax.md")
                 
             ])
     ]

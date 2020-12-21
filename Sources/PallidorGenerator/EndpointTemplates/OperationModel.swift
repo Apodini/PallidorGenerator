@@ -181,14 +181,15 @@ extension OperationModel : CustomStringConvertible {
         get {
             let parametersString : [String?] = [parameters != nil ? parameters!.sorted(by: {$0.name <= $1.name}).map({$0.description}).joined(separator: ", ") : nil, requestBody != nil ? requestBody!.description : nil, "authorization: HTTPAuthorization\(requiresAuth ? "" : "?") = NetworkManager.authorization\(requiresAuth ? "!" : ""), contentType: String?\(specialContentType != nil ? specialContentType! : " = NetworkManager.defaultContentType")"]
             let isGeneric = NotOfResolver.isGeneric(type: successType)
+            let parameterGuards = parameters != nil && !parameters!.isEmpty ? parameters!.map({$0.limitGuard}).skipEmptyJoined(separator: "\n") : ""
             return """
             \(comment)
-            static func \(operationId)\(isGeneric ? "<T : Codable>" : "")(\(parametersString.skipEmptyJoined(separator: ", "))) -> AnyPublisher<\(isGeneric ? "\(successType)<T>" : successType), Error> {
+            static func \(operationId)\(isGeneric ? "<T : Codable>" : "")(\(parametersString.skipEmptyJoined(separator: ", ")))\(!parameterGuards.isEmpty ? " throws" : "") -> AnyPublisher<\(isGeneric ? "\(successType)<T>" : successType), Error> {
             \(parameters != nil && !parameters!.isEmpty ? "var" : "let") path = NetworkManager.basePath! + "\(path.rawValue)"
                 \(pathParams != nil ? pathParams!.map({$0.opDescription}).joined(separator: "\n") : "")
             \(queryParams != nil && !queryParams!.isEmpty ? "path += \"?\(queryParams!.first!.required ? "\(queryParams!.map({$0.opDescription}).joined().dropFirst())\"" : "\(queryParams!.map({$0.opDescription}).joined())\"")" : "")
             \(headerParams != nil && !headerParams!.isEmpty ? "var customHeaders = [String : String]()\n\(headerParams!.map({$0.opDescription}).joined(separator: "\n"))" : "")
-                \(operationDescription)
+                \(parameterGuards.isEmpty ? "" : "\(parameterGuards)\n")\(operationDescription)
             \(failureTryMap)\( successType.isPrimitiveType && !(successType.isPrimitiveArray || successType.isPrimitiveDictionary) ? "" : "\n.decode(type: \(successType).self, decoder: decoder)")
                 .receive(on: DispatchQueue.main)
                 .eraseToAnyPublisher()

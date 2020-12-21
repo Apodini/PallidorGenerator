@@ -46,6 +46,12 @@ class APITests: XCTestCase {
         XCTAssertEqual(test.description, readResult(.Pet_updatePetChangedHTTPMethod))
     }
     
+    func testParseSimpleEndpointMinMaxMethod() {
+        initSUT(resource: .petstore_minMax)
+        let test = sut!.getOperation("getPetById", in: "Pet")!
+        XCTAssertEqual(test.description, readResult(.Pet_getPetByIdMinMax))
+    }
+    
     private func initSUT(resource: Resources) {
         let apiSpec = readResource(resource)
         TypeAliases.parse(resolvedDoc: apiSpec!)
@@ -63,7 +69,8 @@ class APITests: XCTestCase {
         ("testParseDefaultResultMethod", testParseDefaultResultMethod),
         ("testParseSimpleResultMethod", testParseSimpleResultMethod),
         ("testParseSimpleEndpointMethod", testParseSimpleEndpointMethod),
-        ("testParseSimpleEndpointMethodChangedHTTPMethod", testParseSimpleEndpointMethodChangedHTTPMethod)
+        ("testParseSimpleEndpointMethodChangedHTTPMethod", testParseSimpleEndpointMethodChangedHTTPMethod),
+        ("testParseSimpleEndpointMinMaxMethod", testParseSimpleEndpointMinMaxMethod)
     ]
 
 }

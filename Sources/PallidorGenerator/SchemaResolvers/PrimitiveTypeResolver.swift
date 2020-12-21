@@ -34,6 +34,34 @@ struct PrimitiveTypeResolver {
         context.format.rawValue.isEmpty ? "Double" : context.format.rawValue.capitalized
     }
     
+    static func resolveDefaultValue(schema: DereferencedJSONSchema?) -> String? {
+        guard let schema = schema else {
+            return nil
+        }
+        return schema.defaultValue?.description
+    }
+    
+    static func resolveMinMax(schema: DereferencedJSONSchema?) -> (Int?, Int?) {
+        guard let schema = schema else {
+            return (nil,nil)
+        }
+        
+        if let intContext = schema.integerContext {
+            return (intContext.minimum?.value, intContext.maximum?.value)
+        }
+        
+        if let stringContext = schema.stringContext {
+            return (stringContext.minLength, stringContext.maxLength)
+        }
+        
+        if let arrayContext = schema.arrayContext {
+            return (arrayContext.minItems, arrayContext.maxItems)
+        }
+        
+        return (nil, nil)
+        
+    }
+    
     
     /// Resolves primitive types defined in open api document
     /// - Parameter schema: schema to check
@@ -47,7 +75,7 @@ struct PrimitiveTypeResolver {
             return resolveTypeFormat(context: context)
         case .integer(let context, _):
             return resolveTypeFormat(context: context)
-        case .string(let context, let string):
+        case .string(let context, _):
             return resolveTypeFormat(context: context)
         case .array(_, _):
             return ArrayResolver.resolveArrayItemType(schema: schema)

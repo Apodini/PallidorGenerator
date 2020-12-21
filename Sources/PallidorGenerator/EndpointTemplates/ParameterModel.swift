@@ -12,7 +12,7 @@ import OpenAPIKit
 struct ParameterModel : CustomStringConvertible {
     var description: String {
         get {
-            "\(name): \(type)\(required ? "" : "?")"
+            "\(name): \(type)\(required ? "" : "?")\(defaultValue != nil ? (type == "String" ? " = \"\(defaultValue!)\"" : " = \(defaultValue!)")  : "")"
         }
     }
     
@@ -22,10 +22,17 @@ struct ParameterModel : CustomStringConvertible {
     var type: String
     /// comment for this parameter
     var detail: String?
+    /// default value for this parameter
+    var defaultValue: String?
     /// location of parameter (header, query, cookie, path)
     var location : Location
     /// true if param is required in specification
     var required : Bool = false
+    
+    /// minMax values as specified in OpenAPI document
+    /// e.g. minMaxLength for Strings or minMax for Integers
+    var min: Int?
+    var max: Int?
     
     /// description inside method body
     var opDescription : String {
@@ -42,6 +49,47 @@ struct ParameterModel : CustomStringConvertible {
             case .header(let headerField):
                 return "customHeaders[\"\(headerField)\"] = \(required ? "\(name).description" : "\(name)?.description ?? \"\"")"
             }
+        }
+    }
+    
+    enum LimitError: Error {
+        case minMaxViolation(String)
+    }
+    
+    /// provides the `guard` code block for ensuring that a parameter is in the required range.
+    var limitGuard : String? {
+        get {
+            
+            let variable = "\(self.name)\(self.required ? "" : "!")\(self.type == "String" ? ".count" : "")"
+            
+            if let min = self.min, let max = self.max {
+                return """
+                    guard \(variable) >= \(min) && \(variable) <= \(max) else {
+                        throw LimitError.minMaxViolation("Parameter: \(self.name)")
+                    }
+                """
+            }
+            
+            if let min = self.min {
+                if((self.type == "String" || self.type.isPrimitiveArray) && min == 0) {
+                    return nil
+                }
+                return """
+                    guard \(variable) >= \(min) else {
+                        throw LimitError.minMaxViolation("Parameter: \(self.name)")
+                    }
+                """
+            }
+            
+            if let max = self.max {
+                return """
+                    guard \(variable) <= \(max) else {
+                        throw LimitError.minMaxViolation("Parameter: \(self.name)")
+                    }
+                """
+            }
+                        
+            return nil
         }
     }
     
@@ -80,7 +128,10 @@ extension ParameterModel {
         default:
             break
         }
+        
+        let defaultValue = PrimitiveTypeResolver.resolveDefaultValue(schema: param.schemaOrContent.schemaValue)
+        let minMax = PrimitiveTypeResolver.resolveMinMax(schema: param.schemaOrContent.schemaValue)
                 
-        return ParameterModel(name: param.name, type: try! PrimitiveTypeResolver.resolveTypeFormat(schema: param.schemaOrContent.a!.schema), detail: param.description, location: location, required: param.required)
+        return ParameterModel(name: param.name, type: try! PrimitiveTypeResolver.resolveTypeFormat(schema: param.schemaOrContent.a!.schema), detail: param.description, defaultValue: defaultValue, location: location, required: param.required, min: minMax.0, max: minMax.1)
     }
 }
