@@ -59,14 +59,12 @@ struct ParameterModel : CustomStringConvertible {
     /// provides the `guard` code block for ensuring that a parameter is in the required range.
     var limitGuard : String? {
         get {
-            
+                        
             let variable = "\(self.name)\(self.required ? "" : "!")\(self.type == "String" ? ".count" : "")"
             
             if let min = self.min, let max = self.max {
                 return """
-                    guard \(variable) >= \(min) && \(variable) <= \(max) else {
-                        throw LimitError.minMaxViolation("Parameter: \(self.name)")
-                    }
+                    assert(\(variable) >= \(min) && \(variable) <= \(max), "\(self.name) exceeds its limits")
                 """
             }
             
@@ -75,17 +73,13 @@ struct ParameterModel : CustomStringConvertible {
                     return nil
                 }
                 return """
-                    guard \(variable) >= \(min) else {
-                        throw LimitError.minMaxViolation("Parameter: \(self.name)")
-                    }
+                    assert(\(variable) >= \(min), "\(self.name) falls below its lower limit.")
                 """
             }
             
             if let max = self.max {
                 return """
-                    guard \(variable) <= \(max) else {
-                        throw LimitError.minMaxViolation("Parameter: \(self.name)")
-                    }
+                    assert(\(variable) <= \(max), "\(self.name) exceeds its upper limit" )
                 """
             }
                         

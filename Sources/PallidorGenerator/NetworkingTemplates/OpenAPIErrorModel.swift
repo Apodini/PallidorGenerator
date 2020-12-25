@@ -37,12 +37,6 @@ struct OpenAPIErrorModel : CustomStringConvertible {
                 case canNotEncodeOfType(Codable.Type)
             }
             // sourcery:end
-
-            // sourcery:begin: ignore
-            enum LimitError: Error {
-                case minMaxViolation(String)
-            }
-            // sourcery:end
             """
         }
     }

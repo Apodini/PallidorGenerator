@@ -11,9 +11,7 @@ var path = NetworkManager.basePath! + "/pet/{petId}"
     path = path.replacingOccurrences(of: "{petId}", with: String(petId))
 
 
-        guard petId >= 1 && petId <= 100 else {
-        throw LimitError.minMaxViolation("Parameter: petId")
-    }
+        assert(petId >= 1 && petId <= 100, "petId exceeds its limits")
 return NetworkManager.getElement(on: URL(string: path)!, authorization: authorization, contentType: contentType)
 .tryMap { data, response in
         guard let r = response as? HTTPURLResponse, 200..<299 ~= r.statusCode else {
