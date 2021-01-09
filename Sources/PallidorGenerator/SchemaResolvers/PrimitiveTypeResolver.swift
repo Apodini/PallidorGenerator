@@ -10,14 +10,14 @@ import OpenAPIKit
 
 /// Resolves primitive types defined in open api document
 /// e.g. for object properties or method parameters
-struct PrimitiveTypeResolver {
-    
-    
+enum PrimitiveTypeResolver {
     /// Resolves Strings with special formats
     /// - Parameter context: string context
     /// - Returns: type as String
     static func resolveTypeFormat(context: JSONSchema.CoreContext<JSONTypeFormat.StringFormat>) -> String {
-        context.format.rawValue.isEmpty ? "String" : ( context.format.rawValue == "date-time" || context.format.rawValue == "date" ? "Date" : "String")
+        context.format.rawValue.isEmpty ?
+            "String" :
+            ( context.format.rawValue == "date-time" || context.format.rawValue == "date" ? "Date" : "String")
     }
     
     /// Resolves Integer with special formats
@@ -43,7 +43,7 @@ struct PrimitiveTypeResolver {
     
     static func resolveMinMax(schema: DereferencedJSONSchema?) -> (Int?, Int?) {
         guard let schema = schema else {
-            return (nil,nil)
+            return (nil, nil)
         }
         
         if let intContext = schema.integerContext {
@@ -59,7 +59,6 @@ struct PrimitiveTypeResolver {
         }
         
         return (nil, nil)
-        
     }
     
     
@@ -69,7 +68,7 @@ struct PrimitiveTypeResolver {
     /// - Returns: type as String
     static func resolveTypeFormat(schema: JSONSchema) throws -> String {
         switch schema {
-        case .boolean(_):
+        case .boolean:
             return "Bool"
         case .number(let context, _):
             return resolveTypeFormat(context: context)
@@ -77,13 +76,13 @@ struct PrimitiveTypeResolver {
             return resolveTypeFormat(context: context)
         case .string(let context, _):
             return resolveTypeFormat(context: context)
-        case .array(_, _):
+        case .array:
             return ArrayResolver.resolveArrayItemType(schema: schema)
-        case .reference(_):
+        case .reference:
             return try ReferenceResolver.resolveName(schema: schema)
         case .object(_, let objectContext):
             guard let props = objectContext.additionalProperties else {
-                throw ResolvementError.NotSupported(msg: "No nested objects as primitives supported")
+                throw ResolvementError.notSupported(msg: "No nested objects as primitives supported")
             }
             
             if let schema = props.b {
@@ -92,12 +91,12 @@ struct PrimitiveTypeResolver {
             }
         
             return "[String:String]"
-        case .fragment(_),
-             .all(_,_),
-             .one(_,_),
-             .any(_,_),
-             .not(_,_):
-            throw ResolvementError.NotSupported(msg: "No $of operators nor objects allowed as primitive types")
+        case .fragment,
+             .all,
+             .one,
+             .any,
+             .not:
+            throw ResolvementError.notSupported(msg: "No $of operators nor objects allowed as primitive types")
         }
     }
     
@@ -106,7 +105,7 @@ struct PrimitiveTypeResolver {
     /// - Throws: error if type cannot be resolved
     /// - Returns: type as String
     static func resolveTypeFormat(schema: DereferencedJSONSchema) throws -> String {
-        return try resolveTypeFormat(schema: schema.jsonSchema)
+        try resolveTypeFormat(schema: schema.jsonSchema)
     }
     
     
@@ -119,15 +118,16 @@ struct PrimitiveTypeResolver {
             return "Error"
         }
         
-        guard let a = schema.a else {
+        guard let reference = schema.a else {
+            // Checked reference for nil - one of them must contain value
+            // swiftlint:disable:next force_unwrapping
             return try resolveTypeFormat(schema: schema.b!)
         }
         
-        if let name = a.name {
+        if let name = reference.name {
             return "_\(name)"
         }
         
-        return try ReferenceResolver.resolveType(schema: a)
-        
+        return try ReferenceResolver.resolveType(schema: reference)
     }
 }

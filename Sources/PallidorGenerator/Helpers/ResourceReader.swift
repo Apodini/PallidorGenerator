@@ -1,3 +1,6 @@
+// Identifier_name linting rule is disabled
+// because enum cases reflect the names of corresponding test files
+// swiftlint:disable identifier_name
 //
 // ResourceReader.swift
 //
@@ -8,10 +11,9 @@
 import Foundation
 
 /// Reads resources in package
-struct ResourceReader {
-    
+enum ResourceReader {
     /// Resources which are available in this package
-    enum Resources : String {
+    enum Resources: String {
         case HTTPAuthorizationModel, NetworkManagerModel, TestFileModel, PackageModel, TestManifestModel, LinuxMainModel
     }
     

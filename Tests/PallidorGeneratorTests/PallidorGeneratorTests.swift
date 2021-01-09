@@ -4,20 +4,25 @@ import OpenAPIKit
 @testable import PallidorGenerator
 
 final class PallidorGeneratorTests: XCTestCase {
-    
-    var sut : MetaModelConverter?
+    var sut: MetaModelConverter?
     
     func testGenerateErrorModel() {
         initSUT(resource: .lufthansa)
-        XCTAssertEqual(OpenAPIErrorModel.errorTypes.first!, "ErrorResponse")
+        if let errorType = OpenAPIErrorModel.errorTypes.first {
+            XCTAssertEqual(errorType, "ErrorResponse")
+        } else {
+            XCTFail("No error type found")
+        }
     }
     
     private func initSUT(resource: Resources) {
-        let apiSpec = readResource(resource)
-        TypeAliases.parse(resolvedDoc: apiSpec!)
-        var schemas = SchemaConverter(apiSpec!)
+        guard let apiSpec = readResource(resource) else {
+            fatalError("Specification could not be retrieved.")
+        }
+        TypeAliases.parse(resolvedDoc: apiSpec)
+        var schemas = SchemaConverter(apiSpec)
         schemas.parse()
-        var apis = APIConverter(apiSpec!)
+        var apis = APIConverter(apiSpec)
         apis.parse()
         sut = MetaModelConverter()
     }
@@ -25,5 +30,4 @@ final class PallidorGeneratorTests: XCTestCase {
     static var allTests = [
         ("testGenerateErrorModel", testGenerateErrorModel)
     ]
-
 }

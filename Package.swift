@@ -12,7 +12,7 @@ let package = Package(
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "PallidorGenerator",
-            targets: ["PallidorGenerator"]),
+            targets: ["PallidorGenerator"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -29,7 +29,7 @@ let package = Package(
                 .product(name: "OpenAPIKit", package: "OpenAPIKit"),
                 .product(name: "PathKit", package: "PathKit"),
                 .product(name: "Yams", package: "Yams")
-        ],
+            ],
             resources: [
                 .process("NetworkingTemplates/HTTPAuthorizationModel.md"),
                 .process("NetworkingTemplates/NetworkManagerModel.md"),
@@ -37,7 +37,6 @@ let package = Package(
                 .process("MetaModels/PackageModel.md"),
                 .process("MetaModels/TestManifestModel.md"),
                 .process("MetaModels/LinuxMainModel.md")
-                
             ]),
         .testTarget(
             name: "PallidorGeneratorTests",
@@ -61,7 +60,6 @@ let package = Package(
                 .process("Resources/Results/Pet_Endpoint.md"),
                 .process("Resources/Results/Pet_updatePetChangedHTTPMethod.md"),
                 .process("Resources/Results/Pet_getPetByIdMinMax.md")
-                
             ])
     ]
 )

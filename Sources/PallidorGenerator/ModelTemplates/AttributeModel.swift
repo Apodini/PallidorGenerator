@@ -7,22 +7,21 @@
 
 import Foundation
 
-class AttributeModel : Schema {
-    
+class AttributeModel: Schema {
     /// comment for this attribute
     var detail: String?
     
     var description: String {
-        get {
-            
             var template =
             """
-            \(detail == nil ? "" : "/** " + detail!.removeOAIIllegalCharacters() + " */")\(isEnum ? "\n//sourcery: isEnumType" : (!isPrimitiveType ? "\n//sourcery: isCustomType" : ""))
+            \(detail == nil ?
+                // Nil checked in previous statement
+                // swiftlint:disable:next force_unwrapping
+                "" : "/** " + detail!.removeOAIIllegalCharacters() + " */")\(isEnum ? "\n//sourcery: isEnumType" : (!isPrimitiveType ? "\n//sourcery: isCustomType" : ""))
             var \(name.lowerFirst()): \(isEnum ? name.upperFirst() : refType)\(!isRequired ? "?" : "")
             """
             
             if isEnum, let enumValues = self.enumValues {
-                
                 template +=
                 """
                 
@@ -32,15 +31,12 @@ class AttributeModel : Schema {
                 \(enumValues.map { type == "String" ? "case \($0.removeOAIIllegalCharacters()) = \"\($0)\"\n" : "case _\($0) = \($0)\n" }.joined())
                 }
                 """
-                
             }
             
             return template
-        }
     }
     
-    private var refType : String {
-        get {
+    private var refType: String {
             var refType = type
             if NotOfResolver.notOfReferred.contains(type) {
                 refType = type + "<T>"
@@ -49,10 +45,9 @@ class AttributeModel : Schema {
                 refType = "\(type)<\(type[type.index(type.startIndex, offsetBy: 3)...]), T>"
             }
             return "\(isArray ? "[\(refType)]" : refType)"
-        }
     }
     
-    private var isPrimitiveType : Bool {
+    private var isPrimitiveType: Bool {
         refType.isPrimitiveType
     }
     
@@ -61,17 +56,15 @@ class AttributeModel : Schema {
     /// type of attribute
     var type: String
     /// true if type of attribute is an array
-    var isArray : Bool = false
+    var isArray: Bool = false
     /// true if attribute is required in open api document
     var isRequired: Bool
     /// true if attribute type is an enum
     var isEnum: Bool {
-        get {
-            guard enumValues != nil else {
+            guard let enumVals = enumValues else {
                 return false
             }
-            return enumValues!.count > 1
-        }
+            return enumVals.count > 1
     }
     /// list of enum values if attribute is an enum
     var enumValues: [String]?
@@ -82,7 +75,6 @@ class AttributeModel : Schema {
         self.isRequired = isRequired
         self.detail = detail
     }
-    
 }
 
 extension AttributeModel {
@@ -97,16 +89,15 @@ extension AttributeModel {
     }
     
     func getInitializerString() -> String {
-        return "self." + name.lowerFirst() + " = " + name.lowerFirst()
+        "self." + name.lowerFirst() + " = " + name.lowerFirst()
     }
     
     func getInitParamString() -> String {
         "\(self.name.lowerFirst()): \(self.isEnum ? self.name.upperFirst() : self.refType)\(!self.isRequired ? "?" : ""), "
     }
-    
 }
 
-extension AttributeModel : Hashable {
+extension AttributeModel: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(name)
     }
@@ -114,6 +105,4 @@ extension AttributeModel : Hashable {
     static func == (lhs: AttributeModel, rhs: AttributeModel) -> Bool {
         lhs.name == rhs.name
     }
-    
-    
 }

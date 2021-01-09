@@ -8,16 +8,18 @@
 import Foundation
 
 /// enum model as stated in open api document
-class EnumModel : Schema {
+class EnumModel: Schema {
     var detail: String?
     
     
     var description: String {
-        get {
             """
             import Foundation
 
-            \(detail == nil ? "" : "/** " + detail!.removeOAIIllegalCharacters() + " */")
+            \(detail == nil ?
+                // Nil checked in previous statement
+                // swiftlint:disable:next force_unwrapping
+                "" : "/** " + detail!.removeOAIIllegalCharacters() + " */")
             
             enum _\(name): \(enumType), Codable {
             
@@ -26,7 +28,6 @@ class EnumModel : Schema {
             }
 
             """
-        }
     }
     
     /// name of enum
@@ -42,5 +43,4 @@ class EnumModel : Schema {
         self.enumType = enumType
         self.detail = detail
     }
-    
 }

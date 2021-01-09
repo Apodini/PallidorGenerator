@@ -7,33 +7,33 @@
 
 import Foundation
 
-class ObjectModel : Schema {
+class ObjectModel: Schema {
     /// comment for this model
     var detail: String?
     /// true if model is generic
-    var isGeneric : Bool = false
+    var isGeneric: Bool = false
     
     var description: String {
-        get {
-            
             """
             import Foundation
             
-            \(detail == nil ? "" : "/** " + detail!.removeOAIIllegalCharacters() + " */\n")
+            \(detail == nil ?
+                // Nil checked in previous statement
+                // swiftlint:disable:next force_unwrapping
+                "" : "/** " + detail!.removeOAIIllegalCharacters() + " */\n")
             
             class _\(name)\(isGeneric ? "<T: Codable>" : ""): Codable {
             
-            \(attributes.sortedMap({ $0.alterIllegalName(objectName: name).description }).joined())
+            \(attributes.sortedMap { $0.alterIllegalName(objectName: name).description }.joined())
             
-            init(\(attributes.sortedMap({$0.getInitParamString()}).joined().dropLast(2))) {
+            init(\(attributes.sortedMap { $0.getInitParamString() }.joined().dropLast(2))) {
             
-                    \(attributes.sortedMap({$0.getInitializerString()}).joined(separator: "\n"))
+                    \(attributes.sortedMap { $0.getInitializerString() }.joined(separator: "\n"))
                 }
                 
             }
             
             """
-        }
     }
     
     /// name of model
@@ -46,5 +46,4 @@ class ObjectModel : Schema {
         self.attributes = attributes
         self.detail = detail
     }
-    
 }

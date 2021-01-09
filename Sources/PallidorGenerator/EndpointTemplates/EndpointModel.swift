@@ -9,7 +9,6 @@ import Foundation
 import OpenAPIKit
 
 class EndpointModel {
-    
     init(name: String, operations: [OperationModel], detail: String? = nil) {
         self.name = name
         self.operations = operations
@@ -17,15 +16,14 @@ class EndpointModel {
     }
     
     /// name of endpoint
-    var name : String
+    var name: String
     /// list of operations from this endpoint
-    var operations : [OperationModel]
+    var operations: [OperationModel]
     /// comment for this endpoint
     var detail: String?
 }
 
 extension EndpointModel {
-    
     /// Resolves an endpoint
     /// - Parameters:
     ///   - path: path in OpenAPI document
@@ -33,34 +31,34 @@ extension EndpointModel {
     /// - Returns: resolved EndpointModel
     static func resolve(path: OpenAPI.Path, route: ResolvedRoute) -> EndpointModel {
         let endpoint = EndpointModel(name: path.components[0].upperFirst(), operations: [], detail: route.summary)
-        endpoint.operations = route.endpoints.map({OperationModel.resolve(endpoint: $0)})
+        endpoint.operations = route.endpoints.map { OperationModel.resolve(endpoint: $0) }
         return endpoint
     }
 }
 
-extension EndpointModel : CustomStringConvertible {
+extension EndpointModel: CustomStringConvertible {
     var description: String {
-        get {
             """
             import Foundation
             import Combine
             
-            \(detail != nil ? "/**\(detail!.removeOAIIllegalCharacters())*/" : "")
+            \(detail != nil ?
+                // Nil checked in previous statement
+                // swiftlint:disable:next force_unwrapping
+                "/**\(detail!.removeOAIIllegalCharacters())*/" : "")
             struct _\(name.upperFirst())API {
                 static let decoder : JSONDecoder = NetworkManager.decoder
             
-            \(operations.sorted(by: {$0.operationId < $1.operationId}).map({$0.description}).joined(separator: "\n"))
+            \(operations.sorted(by: { $0.operationId < $1.operationId }).map { $0.description }.joined(separator: "\n"))
             
             }
 
             """
-        }
     }
-    
 }
 
-extension EndpointModel : Equatable {
+extension EndpointModel: Equatable {
     static func == (lhs: EndpointModel, rhs: EndpointModel) -> Bool {
-        return lhs.name == rhs.name
+        lhs.name == rhs.name
     }
 }

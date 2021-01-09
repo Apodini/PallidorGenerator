@@ -3,65 +3,107 @@ import OpenAPIKit
 @testable import PallidorGenerator
 
 class APITests: XCTestCase {
-
-    var sut : APIConverter?
+    var sut: APIConverter?
     
     func testParseTypeAliasResultMethod() {
         initSUT(resource: .lufthansa)
-        let test = sut!.getOperation("getPassengerFlights", in: "Flightschedules")!
-        XCTAssertEqual(test.description, readResult(.LH_GetPassengerFlights))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getOperation("getPassengerFlights", in: "Flightschedules") {
+            XCTAssertEqual(test.description, readResult(.LH_GetPassengerFlights))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseDefaultResultMethod() {
         initSUT(resource: .petstore)
-        let test = sut!.getOperation("addPet", in: "Pet")!
-        XCTAssertEqual(test.description, readResult(.Pet_addPet))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getOperation("addPet", in: "Pet") {
+            XCTAssertEqual(test.description, readResult(.Pet_addPet))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseDefaultResultMethodNoAuth() {
         initSUT(resource: .petstore_httpMethodChanged)
-        let test = sut!.getOperation("addPet", in: "Pet")!
-        // modify "authorization" parameter to be optional.
-        // uses authorized result of "addPet" method
-        var result = readResult(.Pet_addPet)
-        result = result.replacingOccurrences(of: "authorization: HTTPAuthorization = NetworkManager.authorization!", with: "authorization: HTTPAuthorization? = NetworkManager.authorization")
-        XCTAssertEqual(test.description, result)
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getOperation("addPet", in: "Pet") {
+            // modify "authorization" parameter to be optional.
+            // uses authorized result of "addPet" method
+            var result = readResult(.Pet_addPet)
+            result = result.replacingOccurrences(
+                of: "authorization: HTTPAuthorization = NetworkManager.authorization!",
+                with: "authorization: HTTPAuthorization? = NetworkManager.authorization"
+            )
+            XCTAssertEqual(test.description, result)
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseSimpleResultMethod() {
         initSUT(resource: .petstore)
-        let test = sut!.getOperation("updatePetWithForm", in: "Pet")!
-        XCTAssertEqual(test.description, readResult(.Pet_updatePetWithForm))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getOperation("updatePetWithForm", in: "Pet") {
+            XCTAssertEqual(test.description, readResult(.Pet_updatePetWithForm))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseSimpleEndpointMethod() {
         initSUT(resource: .petstore)
-        let test = sut!.getEndpoint("Pet")!
-        XCTAssertEqual(test.description, readResult(.Pet_Endpoint))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getEndpoint("Pet") {
+            XCTAssertEqual(test.description, readResult(.Pet_Endpoint))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseSimpleEndpointMethodChangedHTTPMethod() {
         initSUT(resource: .petstore_httpMethodChanged)
-        let test = sut!.getOperation("updatePet", in: "Pet")!
-        XCTAssertEqual(test.description, readResult(.Pet_updatePetChangedHTTPMethod))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getOperation("updatePet", in: "Pet") {
+            XCTAssertEqual(test.description, readResult(.Pet_updatePetChangedHTTPMethod))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseSimpleEndpointMinMaxMethod() {
         initSUT(resource: .petstore_minMax)
-        let test = sut!.getOperation("getPetById", in: "Pet")!
-        XCTAssertEqual(test.description, readResult(.Pet_getPetByIdMinMax))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getOperation("getPetById", in: "Pet") {
+            XCTAssertEqual(test.description, readResult(.Pet_getPetByIdMinMax))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     private func initSUT(resource: Resources) {
-        let apiSpec = readResource(resource)
-        TypeAliases.parse(resolvedDoc: apiSpec!)
-        sut = APIConverter(apiSpec!)
+        guard let apiSpec = readResource(resource) else {
+            fatalError("Specification could not be retrieved.")
+        }
+        TypeAliases.parse(resolvedDoc: apiSpec)
+        sut = APIConverter(apiSpec)
+        // Is initialized in previous statement
+        // swiftlint:disable:next force_unwrapping
         sut!.parse()
     }
     
     override func tearDown() {
-        TypeAliases.store = [String:String]()
+        TypeAliases.store = [String: String]()
         OpenAPIErrorModel.errorTypes = Set<String>()
+        super.tearDown()
     }
     
     static var allTests = [
@@ -72,5 +114,4 @@ class APITests: XCTestCase {
         ("testParseSimpleEndpointMethodChangedHTTPMethod", testParseSimpleEndpointMethodChangedHTTPMethod),
         ("testParseSimpleEndpointMinMaxMethod", testParseSimpleEndpointMinMaxMethod)
     ]
-
 }

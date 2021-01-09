@@ -8,8 +8,7 @@
 import Foundation
 
 /// Meta model for collecting all error types to make them available for library
-struct OpenAPIErrorModel : CustomStringConvertible {
-    
+struct OpenAPIErrorModel: CustomStringConvertible {
     /// set of error types
     static var errorTypes = Set<String>()
     
@@ -22,13 +21,14 @@ struct OpenAPIErrorModel : CustomStringConvertible {
     }
         
     var description: String {
-        get {
             """
             import Foundation
             
             enum _OpenAPIError : Error {
             
-            \(OpenAPIErrorModel.errorTypes.map({"case response\($0.replaceBrackets.normalized)Error(Int, \($0.replaceBrackets.normalized))"}).joined(separator: "\n"))
+            \(OpenAPIErrorModel.errorTypes
+                .map { "case response\($0.replaceBrackets.normalized)Error(Int, \($0.replaceBrackets.normalized))" }
+                .joined(separator: "\n"))
                 case urlError(URLError)
             }
             
@@ -38,8 +38,5 @@ struct OpenAPIErrorModel : CustomStringConvertible {
             }
             // sourcery:end
             """
-        }
     }
 }
-
-

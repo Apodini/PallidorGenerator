@@ -3,55 +3,89 @@ import OpenAPIKit
 @testable import PallidorGenerator
 
 class SchemaTests: XCTestCase {
-
-    var sut : SchemaConverter?
-
+    var sut: SchemaConverter?
+    
     func testParseDefaultSchema() {
         initSUT(resource: .petstore)
-        let test = sut!.getSchema(name: "Pet")!
-        XCTAssertEqual(test.description, readResult(.Pet))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getSchema(name: "Pet") {
+            XCTAssertEqual(test.description, readResult(.Pet))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseComplexSchema() {
         initSUT(resource: .lufthansa)
-        let test = sut!.getSchema(name: "FlightAggregate")!
-        XCTAssertEqual(test.description, readResult(.FlightAggregate))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getSchema(name: "FlightAggregate") {
+            XCTAssertEqual(test.description, readResult(.FlightAggregate))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseDefaultEnum() {
         initSUT(resource: .lufthansa)
-        let test = sut!.getSchema(name: "MessageLevel")!
-        XCTAssertEqual(test.description, readResult(.MessageLevel))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getSchema(name: "MessageLevel") {
+            XCTAssertEqual(test.description, readResult(.MessageLevel))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseResolvedTypeAliasSchema() {
         initSUT(resource: .lufthansa)
-        let test = sut!.getSchema(name: "PeriodOfOperation")!
-        XCTAssertEqual(test.description, readResult(.PeriodOfOperation))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getSchema(name: "PeriodOfOperation") {
+            XCTAssertEqual(test.description, readResult(.PeriodOfOperation))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseOneOfSchema() {
         initSUT(resource: .wines)
-        let test = sut!.getSchema(name: "PaymentInstallmentSchedule")!
-        XCTAssertEqual(test.description, readResult(.PaymentInstallmentSchedule))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getSchema(name: "PaymentInstallmentSchedule") {
+            XCTAssertEqual(test.description, readResult(.PaymentInstallmentSchedule))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     func testParseAnyOfSchema() {
         initSUT(resource: .wines_any)
-        let test = sut!.getSchema(name: "PaymentInstallmentSchedule")!
-        XCTAssertEqual(test.description, readResult(.PaymentInstallmentSchedule_Any))
+        // Is initialized by `initSUT` statement
+        // swiftlint:disable:next force_unwrapping
+        if let test = sut!.getSchema(name: "PaymentInstallmentSchedule") {
+            XCTAssertEqual(test.description, readResult(.PaymentInstallmentSchedule_Any))
+        } else {
+            XCTFail("Library could not be generated.")
+        }
     }
     
     private func initSUT(resource: Resources) {
-        let apiSpec = readResource(resource)
-        TypeAliases.parse(resolvedDoc: apiSpec!)
-        sut = SchemaConverter(apiSpec!)
+        guard let apiSpec = readResource(resource) else {
+            fatalError("Specification could not be retrieved.")
+        }
+        TypeAliases.parse(resolvedDoc: apiSpec)
+        sut = SchemaConverter(apiSpec)
+        // Is initialized in previous statement
+        // swiftlint:disable:next force_unwrapping
         sut!.parse()
     }
     
     override func tearDown() {
-        TypeAliases.store = [String:String]()
+        TypeAliases.store = [String: String]()
         OpenAPIErrorModel.errorTypes = Set<String>()
+        super.tearDown()
     }
     
     static var allTests = [
@@ -62,5 +96,4 @@ class SchemaTests: XCTestCase {
         ("testParseOneOfSchema", testParseOneOfSchema),
         ("testParseAnyOfSchema", testParseAnyOfSchema)
     ]
-
 }

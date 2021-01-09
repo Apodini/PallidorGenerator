@@ -8,20 +8,22 @@
 import Foundation
 
 /// $not model as stated in open api document
-struct NotModel : Schema {
+struct NotModel: Schema {
     /// name of model
     var name: String
     /// type which this model can not be a type of
-    var notOfType : String
+    var notOfType: String
     /// comment for this model
     var detail: String?
     
     var description: String {
-        get {
             """
             import Foundation
             
-            \(detail == nil ? "" : "/** " + detail!.removeOAIIllegalCharacters() + " */\n")
+            \(detail == nil ?
+                // Nil checked in previous statement
+                // swiftlint:disable:next force_unwrapping
+                "" : "/** " + detail!.removeOAIIllegalCharacters() + " */\n")
             //sourcery: genericTypeAnnotation="<\(notOfType), T : Codable>"
             struct \(name)<\(notOfType), T : Codable> : Codable {
                 let wrappedValue: T
@@ -41,9 +43,5 @@ struct NotModel : Schema {
                 
             }
             """
-        }
     }
-    
-    
-    
 }

@@ -10,46 +10,42 @@ import OpenAPIKit
 import PathKit
 
 /// Converter for API endpoints from specfication
-struct APIConverter : Converting {
-    
+struct APIConverter: Converting {
     init(_ resolvedDocument: ResolvedDocument) {
         self.resolvedDocument = resolvedDocument
     }
     
-    var resolvedDocument : ResolvedDocument
+    var resolvedDocument: ResolvedDocument
     
     var endpoints: [EndpointModel] = [EndpointModel]()
     
     mutating func parse() {
         for (path, route) in resolvedDocument.routesByPath {
             let endpoint = EndpointModel.resolve(path: path, route: route)
-            guard let same = endpoints.first(where: {$0 == endpoint}) else {
+            guard let same = endpoints.first(where: { $0 == endpoint }) else {
                 endpoints.append(endpoint)
                 continue
             }
             same.operations.append(contentsOf: endpoint.operations)
-
         }
     }
     
     func getEndpoint(_ name: String) -> EndpointModel? {
-        endpoints.first(where: {$0.name == name})
+        endpoints.first(where: { $0.name == name })
     }
     
     func getOperation(_ name: String, in endpoint: String) -> OperationModel? {
-        getEndpoint(endpoint)!.operations.first(where: {$0.operationId == name})
+        getEndpoint(endpoint)?.operations.first(where: { $0.operationId == name })
     }
     
-    mutating func writeToFile(path: Path) throws -> [URL]{
-        
+    mutating func writeToFile(path: Path) throws -> [URL] {
         var filePaths = [URL]()
         
-        for e in endpoints {
-            let fileName = path + Path("_\(e.name)API.swift")
-            try e.description.write(to: fileName.url, atomically: true, encoding: .utf8)
+        for endpoint in endpoints {
+            let fileName = path + Path("_\(endpoint.name)API.swift")
+            try endpoint.description.write(to: fileName.url, atomically: true, encoding: .utf8)
             filePaths.append(fileName.url)
         }
         return filePaths
     }
-
 }

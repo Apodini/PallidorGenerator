@@ -8,9 +8,9 @@
 import Foundation
 
 /// Errors which can occur during converting open api document
-enum ResolvementError : Error {
-    case NestedObjectError(msg: String)
-    case UnknownType(msg: String)
-    case NotSupported(msg: String)
-    case ReferenceTypeNotFound(msg: String)
+enum ResolvementError: Error {
+    case nestedObjectError(msg: String)
+    case unknownType(msg: String)
+    case notSupported(msg: String)
+    case referenceTypeNotFound(msg: String)
 }

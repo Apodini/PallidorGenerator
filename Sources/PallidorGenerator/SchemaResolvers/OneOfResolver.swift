@@ -9,9 +9,7 @@ import Foundation
 import OpenAPIKit
 
 /// Resolves all $oneOf types in document
-struct OneOfResolver {
-    
-    
+enum OneOfResolver {
     /// Resolve $onelOf types in document
     /// - Parameters:
     ///   - name: name of object
@@ -20,16 +18,20 @@ struct OneOfResolver {
     static func resolve(objectName name: String, schemas: [JSONSchema]) -> OfModel {
         let model = OfModel(name: name, detail: "", typeOf: .oneOf, inheritedObjects: [])
         
-        let inheritedObjects = schemas.map { (schema) -> String in
-            try! ReferenceResolver.resolveName(schema: schema)
+        let inheritedObjects = schemas.map { schema -> String in
+            guard let name = try? ReferenceResolver.resolveName(schema: schema) else {
+                fatalError("Reference could not be resolved")
+            }
+            return name
         }
         
-        let attributes = inheritedObjects.map { AttributeModel(name: "none", type: $0, isRequired: true, detail: "") }
+        let attributes = inheritedObjects.map {
+            AttributeModel(name: "none", type: $0, isRequired: true, detail: "")
+        }
         
         model.inheritedObjects = inheritedObjects
         model.attributes = attributes
         
         return model
     }
-    
 }

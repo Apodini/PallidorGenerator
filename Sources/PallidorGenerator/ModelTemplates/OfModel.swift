@@ -8,10 +8,8 @@
 import Foundation
 
 /// $anyOf or $oneOf models as stated in open api document
-class OfModel : ObjectModel {
-    
+class OfModel: ObjectModel {
     override var description: String {
-        get {
             """
             import Foundation
             
@@ -23,41 +21,53 @@ class OfModel : ObjectModel {
                 //sourcery: OfTypeEnum
                 enum \(typeOf.rawValue) : Codable {
             
-                \(inheritedObjects.map({"case \($0.caseLowerFirst())(\(getInheritedObjectType(from: $0)))"}).joined(separator: "\n"))
-                \(combinedObjects.map({"case \($0.caseLowerFirst())(\(getInheritedObjectType(from: $0)))"}).joined(separator: "\n"))
+                \(inheritedObjects.map { "case \($0.caseLowerFirst())(\(getInheritedObjectType(from: $0)))"
+                }
+                .joined(separator: "\n"))
+                \(combinedObjects.map { "case \($0.caseLowerFirst())(\(getInheritedObjectType(from: $0)))"
+                }
+                .joined(separator: "\n"))
             
                     //sourcery: ignore
                     func encode(to encoder: Encoder) throws {
                         switch self {
-                            \(inheritedObjects.map({ """
+                            \(inheritedObjects.map { """
                             case .\($0.caseLowerFirst())(let of):
                                 try of.encode(to: encoder)
                                 break
-                            """ }).joined(separator: "\n"))
-                            \(combinedObjects.map({ """
+                            """
+                            }
+                            .joined(separator: "\n"))
+                            \(combinedObjects.map { """
                             case .\($0.caseLowerFirst())(let of):
                                 try of.encode(to: encoder)
                                 break
-                            """ }).joined(separator: "\n"))
+                            """
+                            }
+                            .joined(separator: "\n"))
                         }
                     }
             
                     //sourcery: ignore
                     init(from decoder: Decoder) throws {
-                        \(inheritedObjects.map({
+                        \(inheritedObjects.map {
                         """
                         if let \($0.caseLowerFirst()) = try? \(getInheritedObjectType(from: $0)).init(from: decoder) {
                         self = .\($0.caseLowerFirst())(\($0.caseLowerFirst()))
                         return
                         }
-                        """ }).joined(separator: "\n"))
-                        \(combinedObjects.map({
+                        """
+                        }
+                        .joined(separator: "\n"))
+                        \(combinedObjects.map {
                         """
                         if let \($0.caseLowerFirst()) = try? \(getInheritedObjectType(from: $0)).init(from: decoder) {
                             self = .\($0.caseLowerFirst())(\($0.caseLowerFirst()))
                                 return
                         }
-                        """ }).joined(separator: "\n"))
+                        """
+                        }
+                        .joined(separator: "\n"))
             
                         throw APIEncodingError.canNotEncodeOfType(_\(name).self)
                     }
@@ -81,32 +91,26 @@ class OfModel : ObjectModel {
             }
 
             """
-        }
     }
 
     /// list of objects which are part of $of model
-    var inheritedObjects : [String]
+    var inheritedObjects: [String]
     
     /// combination objects (combines model types for $anyOf operator)
-    var combinedObjects : [String] {
-        get {
-            
+    var combinedObjects: [String] {
             typeOf == .anyOf
                 ? inheritedObjects.powerSet
-                    .filter({$0.count > 1})
-                    .map(
-                        {"_\($0.sorted(by: {$0 < $1}).joined().replacingOccurrences(of: "_", with: ""))"}
-                    )
-                    .sorted(by: {$0 < $1})
+                    .filter { $0.count > 1 }
+                    .map { "_\($0.sorted(by: { $0 < $1 }).joined().replacingOccurrences(of: "_", with: ""))" }
+                    .sorted(by: { $0 < $1 })
                 : []
-        }
     }
     
     /// anyOf or oneOf type
-    var typeOf : TypeOf
+    var typeOf: TypeOf
     
     /// type of $of
-    enum TypeOf : String {
+    enum TypeOf: String {
         case oneOf = "OneOf"
         case anyOf = "AnyOf"
     }
@@ -119,7 +123,6 @@ class OfModel : ObjectModel {
 }
 
 extension OfModel {
-    
     /// Renames case types
     /// - Parameter name: name of type
     /// - Returns: renamed type

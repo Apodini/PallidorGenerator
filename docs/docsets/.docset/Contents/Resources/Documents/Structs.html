@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Structures  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Structures" class="dashAnchor"></a>
+    <a title="Structures  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (77% documented)</p>
+        <p class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Structures  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AttributeModel.html">AttributeModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EndpointModel.html">EndpointModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/EnumModel.html">EnumModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ObjectModel.html">ObjectModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OfModel.html">OfModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OfModel/TypeOf.html">– TypeOf</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/ResolvementError.html">ResolvementError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Foundation.Bundle.html">Foundation.Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/Converting.html">Converting</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Schema.html">Schema</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/APIConverter.html">APIConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/AllOfResolver.html">AllOfResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/AnyOfResolver.html">AnyOfResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ArrayResolver.html">ArrayResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/MetaModelConverter.html">MetaModelConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/NotModel.html">NotModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/NotOfResolver.html">NotOfResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ObjectResolver.html">ObjectResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/OneOfResolver.html">OneOfResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/OpenAPIErrorModel.html">OpenAPIErrorModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/OperationModel.html">OperationModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PallidorGenerator.html">PallidorGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ParameterModel.html">ParameterModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ParameterModel/LimitError.html">– LimitError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ParameterModel/Location.html">– Location</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PrimitiveTypeResolver.html">PrimitiveTypeResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PropertyResolver.html">PropertyResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ReferenceResolver.html">ReferenceResolver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/RequestBodyModel.html">RequestBodyModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ResourceReader.html">ResourceReader</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ResourceReader/Resources.html">– Resources</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ResponseModel.html">ResponseModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/SchemaConverter.html">SchemaConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/TypeAliases.html">TypeAliases</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Structures</h1>
+            <p>The following structures are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator12APIConverterV"></a>
+                    <a name="//apple_ref/swift/Struct/APIConverter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator12APIConverterV">APIConverter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converter for API endpoints from specfication</p>
+
+                        <a href="Structs/APIConverter.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">APIConverter</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Converting.html">Converting</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator18MetaModelConverterV"></a>
+                    <a name="//apple_ref/swift/Struct/MetaModelConverter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator18MetaModelConverterV">MetaModelConverter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converter for all models that are not bound to an open api document
+but are required for generating a Swift package</p>
+
+                        <a href="Structs/MetaModelConverter.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MetaModelConverter</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator15SchemaConverterV"></a>
+                    <a name="//apple_ref/swift/Struct/SchemaConverter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator15SchemaConverterV">SchemaConverter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Converter: Takes the parsed OpenAPI document (from OpenAPIKit) and creates Model objects. These objects contain the template to be exported as a Swift file.</p>
+
+                        <a href="Structs/SchemaConverter.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">SchemaConverter</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Converting.html">Converting</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator14OperationModelV"></a>
+                    <a name="//apple_ref/swift/Struct/OperationModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator14OperationModelV">OperationModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Model for operations of endpoint</p>
+
+                        <a href="Structs/OperationModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">OperationModel</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">OperationModel</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator14ParameterModelV"></a>
+                    <a name="//apple_ref/swift/Struct/ParameterModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator14ParameterModelV">ParameterModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>model for parameters</p>
+
+                        <a href="Structs/ParameterModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ParameterModel</span> <span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator16RequestBodyModelV"></a>
+                    <a name="//apple_ref/swift/Struct/RequestBodyModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator16RequestBodyModelV">RequestBodyModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>request body of an operation from open api document</p>
+
+                        <a href="Structs/RequestBodyModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">RequestBodyModel</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">RequestBodyModel</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator13ResponseModelV"></a>
+                    <a name="//apple_ref/swift/Struct/ResponseModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator13ResponseModelV">ResponseModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>reponse of operation as stated in open api document</p>
+
+                        <a href="Structs/ResponseModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ResponseModel</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ResponseModel</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator14ResourceReaderV"></a>
+                    <a name="//apple_ref/swift/Struct/ResourceReader" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator14ResourceReaderV">ResourceReader</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Reads resources in package</p>
+
+                        <a href="Structs/ResourceReader.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ResourceReader</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator11TypeAliasesV"></a>
+                    <a name="//apple_ref/swift/Struct/TypeAliases" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator11TypeAliasesV">TypeAliases</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/TypeAliases.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">TypeAliases</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator8NotModelV"></a>
+                    <a name="//apple_ref/swift/Struct/NotModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator8NotModelV">NotModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>$not model as stated in open api document</p>
+
+                        <a href="Structs/NotModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">NotModel</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Schema.html">Schema</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator17OpenAPIErrorModelV"></a>
+                    <a name="//apple_ref/swift/Struct/OpenAPIErrorModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator17OpenAPIErrorModelV">OpenAPIErrorModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Meta model for collecting all error types to make them available for library</p>
+
+                        <a href="Structs/OpenAPIErrorModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">OpenAPIErrorModel</span> <span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGeneratorAAV"></a>
+                    <a name="//apple_ref/swift/Struct/PallidorGenerator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGeneratorAAV">PallidorGenerator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Entry for Pallidor Generator</p>
+
+                        <a href="Structs/PallidorGenerator.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">PallidorGenerator</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator13AllOfResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/AllOfResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator13AllOfResolverV">AllOfResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves all $allOf types in document</p>
+
+                        <a href="Structs/AllOfResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">AllOfResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator13AnyOfResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/AnyOfResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator13AnyOfResolverV">AnyOfResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves all $anyOf types in document</p>
+
+                        <a href="Structs/AnyOfResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">AnyOfResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator13ArrayResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/ArrayResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator13ArrayResolverV">ArrayResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves array types defined in open api document</p>
+
+                        <a href="Structs/ArrayResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ArrayResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator13NotOfResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/NotOfResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator13NotOfResolverV">NotOfResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/NotOfResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">NotOfResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator14ObjectResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/ObjectResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator14ObjectResolverV">ObjectResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves object models stated in open api document</p>
+
+                        <a href="Structs/ObjectResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ObjectResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator13OneOfResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/OneOfResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator13OneOfResolverV">OneOfResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves all $oneOf types in document</p>
+
+                        <a href="Structs/OneOfResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">OneOfResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator21PrimitiveTypeResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/PrimitiveTypeResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator21PrimitiveTypeResolverV">PrimitiveTypeResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves primitive types defined in open api document
+e.g. for object properties or method parameters</p>
+
+                        <a href="Structs/PrimitiveTypeResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">PrimitiveTypeResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator16PropertyResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/PropertyResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator16PropertyResolverV">PropertyResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves properties stated in open api document</p>
+
+                        <a href="Structs/PropertyResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">PropertyResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17PallidorGenerator17ReferenceResolverV"></a>
+                    <a name="//apple_ref/swift/Struct/ReferenceResolver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17PallidorGenerator17ReferenceResolverV">ReferenceResolver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resolves $ref references as stated in open api document</p>
+
+                        <a href="Structs/ReferenceResolver.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">ReferenceResolver</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2021-01-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

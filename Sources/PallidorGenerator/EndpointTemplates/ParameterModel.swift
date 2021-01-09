@@ -9,11 +9,14 @@ import Foundation
 import OpenAPIKit
 
 /// model for parameters
-struct ParameterModel : CustomStringConvertible {
+struct ParameterModel: CustomStringConvertible {
     var description: String {
-        get {
-            "\(name): \(type)\(required ? "" : "?")\(defaultValue != nil ? (type == "String" ? " = \"\(defaultValue!)\"" : " = \(defaultValue!)")  : "")"
-        }
+            """
+\(name): \(type)\(required ? "" : "?")\(defaultValue != nil ?
+                                            // Nil checked in previous statement
+                                            // swiftlint:disable:next force_unwrapping
+                                            (type == "String" ? " = \"\(defaultValue!)\"" : " = \(defaultValue!)")  : "")
+"""
     }
     
     /// name of this parameter
@@ -25,9 +28,9 @@ struct ParameterModel : CustomStringConvertible {
     /// default value for this parameter
     var defaultValue: String?
     /// location of parameter (header, query, cookie, path)
-    var location : Location
+    var location: Location
     /// true if param is required in specification
-    var required : Bool = false
+    var required: Bool = false
     
     /// minMax values as specified in OpenAPI document
     /// e.g. minMaxLength for Strings or minMax for Integers
@@ -35,10 +38,9 @@ struct ParameterModel : CustomStringConvertible {
     var max: Int?
     
     /// description inside method body
-    var opDescription : String {
-        get {
+    var opDescription: String {
             switch location {
-            case .cookie(_):
+            case .cookie:
                 return ""
             case .path(let name):
                 return "path = path.replacingOccurrences(of: \"{\(name)}\", with: String(\(name)))"
@@ -49,7 +51,6 @@ struct ParameterModel : CustomStringConvertible {
             case .header(let headerField):
                 return "customHeaders[\"\(headerField)\"] = \(required ? "\(name).description" : "\(name)?.description ?? \"\"")"
             }
-        }
     }
     
     enum LimitError: Error {
@@ -57,9 +58,7 @@ struct ParameterModel : CustomStringConvertible {
     }
     
     /// provides the `guard` code block for ensuring that a parameter is in the required range.
-    var limitGuard : String? {
-        get {
-                        
+    var limitGuard: String? {
             let variable = "\(self.name)\(self.required ? "" : "!")\(self.type == "String" ? ".count" : "")"
             
             if let min = self.min, let max = self.max {
@@ -69,7 +68,7 @@ struct ParameterModel : CustomStringConvertible {
             }
             
             if let min = self.min {
-                if((self.type == "String" || self.type.isPrimitiveArray) && min == 0) {
+                if (self.type == "String" || self.type.isPrimitiveArray) && min == 0 {
                     return nil
                 }
                 return """
@@ -84,15 +83,14 @@ struct ParameterModel : CustomStringConvertible {
             }
                         
             return nil
-        }
     }
     
-    private var queryInitializer : String {
+    private var queryInitializer: String {
         name == "String" || type.contains("[") ? name : "\(name)\(required ? "" : "?").description"
     }
     
     /// Possible location of parameters
-    enum Location : Equatable {
+    enum Location: Equatable {
         case path(String)
         case query(String)
         case header(String)  /** not "Accept", "Content-Type" or "Authorization" */
@@ -101,31 +99,41 @@ struct ParameterModel : CustomStringConvertible {
 }
 
 extension ParameterModel {
-    
     /// Resolves parameter from OpenAPI document operation
     /// - Parameter param: Parameter from OpenAPI document
     /// - Returns: ParameterModel object
     static func resolve(param: DereferencedParameter) -> ParameterModel {
-        
         var location = ParameterModel.Location.path(param.name)
         
         switch param.location {
         case .cookie:
             location = .cookie(param.name)
-            break
         case .header:
             location = .header(param.name)
-            break
         case .query:
             location = .query(param.name)
-            break
-        default:
+        case .path:
             break
         }
         
         let defaultValue = PrimitiveTypeResolver.resolveDefaultValue(schema: param.schemaOrContent.schemaValue)
         let minMax = PrimitiveTypeResolver.resolveMinMax(schema: param.schemaOrContent.schemaValue)
                 
-        return ParameterModel(name: param.name, type: try! PrimitiveTypeResolver.resolveTypeFormat(schema: param.schemaOrContent.a!.schema), detail: param.description, defaultValue: defaultValue, location: location, required: param.required, min: minMax.0, max: minMax.1)
+        guard let schemaContext = param.schemaOrContent.a,
+              let type = try? PrimitiveTypeResolver.resolveTypeFormat(schema: schemaContext.schema)
+        else {
+            fatalError("Primitive type could not be resolved.")
+        }
+        
+        return ParameterModel(
+            name: param.name,
+            type: type,
+            detail: param.description,
+            defaultValue: defaultValue,
+            location: location,
+            required: param.required,
+            min: minMax.0,
+            max: minMax.1
+        )
     }
 }

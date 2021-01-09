@@ -10,7 +10,9 @@ import Foundation
 /** from: https://stackoverflow.com/questions/50264717/get-all-possible-combination-of-items-in-array-without-duplicate-groups-in-swift/50264766 */
 extension Array {
     var powerSet: [[Element]] {
-        guard !isEmpty else { return [[]] }
+        guard !isEmpty else {
+            return [[]]
+        }
         return Array(self[1...]).powerSet.flatMap { [$0, [self[0]] + $0] }
     }
 }

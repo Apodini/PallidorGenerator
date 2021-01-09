@@ -8,8 +8,7 @@
 import Foundation
 import OpenAPIKit
 
-struct NotOfResolver {
-    
+enum NotOfResolver {
     /// Resolves $not types
     /// - Parameters:
     ///   - name: name of object
@@ -17,9 +16,10 @@ struct NotOfResolver {
     /// - Throws: throws if type cannot be resolved
     /// - Returns: NotModel
     static func resolve(objectName name: String, schema: JSONSchema) throws -> NotModel {
-        let notOfType = try! PrimitiveTypeResolver.resolveTypeFormat(schema: schema)
+        guard let notOfType = try? PrimitiveTypeResolver.resolveTypeFormat(schema: schema) else {
+            fatalError("Type format of primitive type could not be resolved.")
+        }
         notOfReferences.append(name)
         return NotModel(name: name, notOfType: notOfType, detail: schema.coreContext?.description ?? "")
     }
-    
 }

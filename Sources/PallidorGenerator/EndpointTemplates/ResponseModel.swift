@@ -10,7 +10,6 @@ import OpenAPIKit
 
 /// reponse of operation as stated in open api document
 struct ResponseModel {
-    
     internal init(type: String? = nil, formats: [OpenAPI.ContentType]? = nil, detail: String? = nil, code: OpenAPI.Response.StatusCode) {
         self.type = type
         self.formats = formats
@@ -19,34 +18,31 @@ struct ResponseModel {
     }
     
     /// type of response
-    var type : String?
+    var type: String?
     /// list of formats of response (json/application only relevant)
-    var formats : [OpenAPI.ContentType]?
+    var formats: [OpenAPI.ContentType]?
     /// comment for this response
-    var detail : String?
+    var detail: String?
     /// the status code which this response contains
-    var code : OpenAPI.Response.StatusCode
-    
+    var code: OpenAPI.Response.StatusCode
 }
 
 extension ResponseModel {
-    
     /// Resolves the response for an operation as stated in open api document
     /// - Parameters:
     ///   - code: the status code which this response contains
     ///   - response: reponse of operation as stated in open api document
     /// - Returns: response model
     static func resolve(code: OpenAPI.Response.StatusCode, response: OpenAPI.Response) -> ResponseModel {
-        guard  response.content.values.count > 0, let schema = response.content.values[0].schema else {
+        guard  !response.content.values.isEmpty, let schema = response.content.values[0].schema else {
             return ResponseModel(detail: response.description, code: code)
         }
         let formats = response.content.keys
-        var type : String
+        var type: String
         
          do {
            type = try PrimitiveTypeResolver.resolveTypeFormat(schema: schema)
-         } catch let err {
-            print(err)
+         } catch {
             type = "Error"
         }
         
@@ -61,19 +57,15 @@ extension ResponseModel {
             OpenAPIErrorModel.errorTypes.insert(actualType.removePrefix)
         }
         return ResponseModel(type: actualType, formats: formats, detail: response.description, code: code)
-        
     }
 }
 
-extension ResponseModel : CustomStringConvertible {
+extension ResponseModel: CustomStringConvertible {
     var description: String {
-        get {
             type ?? "String"
-        }
     }
     /// error decoding for `OpenAPIError` errors
-    var errorDecoderString : String {
-        get {
+    var errorDecoderString: String {
             if let type = type {
                 switch type {
                 case "String":
@@ -99,6 +91,5 @@ extension ResponseModel : CustomStringConvertible {
                 }
             }
             return "throw _OpenAPIError.urlError(URLError(URLError.Code(rawValue: \(code.rawValue))))"
-        }
     }
 }

@@ -12,17 +12,16 @@ import OpenAPIKit
 struct RequestBodyModel {
     /// list of content types this request body conforms to.
     /// only json/application is relevant
-    var formats : [OpenAPI.ContentType]
+    var formats: [OpenAPI.ContentType]
     /// type of request body
-    var type : String
+    var type: String
     /// true if request body is required
-    var required : Bool
+    var required: Bool
     /// comment for this request body
-    var detail : String?
+    var detail: String?
 }
 
 extension RequestBodyModel {
-    
     /// Resolves a request body from OpenAPI document
     /// - Parameter request: request as stated in open api document
     /// - Returns: request body model
@@ -31,12 +30,14 @@ extension RequestBodyModel {
             return nil
         }
         let formats = request.content.keys
-        let type = try! PrimitiveTypeResolver.resolveTypeFormat(schema: request.content.values[0].schema)
+        guard let type = try? PrimitiveTypeResolver.resolveTypeFormat(schema: request.content.values[0].schema) else {
+            fatalError("Type format could not be resolved for request body.")
+        }
         return RequestBodyModel(formats: formats, type: type, required: request.required, detail: request.description)
     }
 }
 
-extension RequestBodyModel : CustomStringConvertible {
+extension RequestBodyModel: CustomStringConvertible {
     var description: String {
         "element: \(type)\(required ? "" : "?")"
     }

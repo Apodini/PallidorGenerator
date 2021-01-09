@@ -9,8 +9,7 @@ import Foundation
 import OpenAPIKit
 
 /// Resolves object models stated in open api document
-struct ObjectResolver {
-    
+enum ObjectResolver {
     /// Resolves all top level objects from open api document (schema components)
     /// - Parameters:
     ///   - name: name of object
@@ -19,9 +18,12 @@ struct ObjectResolver {
     /// - Returns: resolved object model
     static func resolve(name: String, context: JSONSchemaContext, schema: JSONSchema.ObjectContext) -> ObjectModel {
         let objModel = ObjectModel(name: name, attributes: [], detail: context.description)
-        objModel.attributes = schema.properties.map({ (attributeName, attributeSchema) -> AttributeModel in
-            try! PropertyResolver.resolve(name: attributeName, schema: attributeSchema)
-        })
+        objModel.attributes = schema.properties.map { attributeName, attributeSchema -> AttributeModel in
+            guard let attribute = try? PropertyResolver.resolve(name: attributeName, schema: attributeSchema) else {
+                fatalError("Attribute could not be resolved for schema: \(name)")
+            }
+            return attribute
+        }
         return objModel
     }
 }

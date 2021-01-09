@@ -8,7 +8,7 @@
 import Foundation
 
 /// Schema protocol which all component schema models must conform to
-protocol Schema : CustomStringConvertible {
+protocol Schema: CustomStringConvertible {
     /// name of schema
     var name: String { get set }
     /// comment of schema

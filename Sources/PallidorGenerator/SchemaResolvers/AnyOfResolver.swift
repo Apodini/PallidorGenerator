@@ -9,9 +9,7 @@ import Foundation
 import OpenAPIKit
 
 /// Resolves all $anyOf types in document
-struct AnyOfResolver {
-    
-    
+enum AnyOfResolver {
     /// Resolve $anylOf types in document
     /// - Parameters:
     ///   - name: name of object
@@ -20,8 +18,11 @@ struct AnyOfResolver {
     static func resolve(objectName name: String, schemas: [JSONSchema]) -> OfModel {
         let model = OfModel(name: name, typeOf: .anyOf, inheritedObjects: [])
         
-        let inheritedObjects = schemas.map { (schema) -> String in
-            try! ReferenceResolver.resolveName(schema: schema)
+        let inheritedObjects = schemas.map { schema -> String in
+            guard let name = try? ReferenceResolver.resolveName(schema: schema) else {
+                fatalError("Resolving identifier of reference failed.")
+            }
+            return name
         }
         
         let attributes = inheritedObjects.map { AttributeModel(name: "none", type: $0, isRequired: true, detail: "") }
@@ -31,5 +32,4 @@ struct AnyOfResolver {
         
         return model
     }
-    
 }

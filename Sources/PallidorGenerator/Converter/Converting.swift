@@ -19,5 +19,5 @@ protocol Converting {
     mutating func writeToFile(path: Path) throws -> [URL]
     
     /// Parses the items from OpenAPIKit
-    mutating func parse() -> Void
+    mutating func parse()
 }

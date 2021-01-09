@@ -1,3 +1,6 @@
+// Disabled pattern_matching_keywords because its enforced by OpenAPIKIT
+// swiftlint:disable pattern_matching_keywords
+
 //
 //  AllOfResolver.swift
 //
@@ -9,23 +12,24 @@ import Foundation
 import OpenAPIKit
 
 /// Resolves all $allOf types in document
-struct AllOfResolver {
-    
+enum AllOfResolver {
     /// Resolve $allOf types in document
     /// - Parameters:
     ///   - name: name of object
     ///   - schemas: schemas to check
     /// - Returns: Object model
     static func resolve(objectName name: String, schemas: [JSONSchema]) -> ObjectModel {
-        var primary : ObjectModel = ObjectModel(name: name, attributes: [], detail: "")
+        var primary = ObjectModel(name: name, attributes: [], detail: "")
         var inherited = [AttributeModel]()
-        for s in schemas {
-            switch s {
+        for schema in schemas {
+            switch schema {
             case .object(let core, let object):
                 primary = ObjectResolver.resolve(name: name, context: core, schema: object)
-                break
             case .reference(let refContext):
-                inherited.append(contentsOf: try! ReferenceResolver.resolveAttributes(reference: refContext))
+                guard let attributes = try? ReferenceResolver.resolveAttributes(reference: refContext) else {
+                    fatalError("No attributes could be resolved - allOf must contain attributes.")
+                }
+                inherited.append(contentsOf: attributes)
             default:
                 break
             }
@@ -33,5 +37,4 @@ struct AllOfResolver {
         primary.attributes.append(contentsOf: inherited)
         return primary
     }
-    
 }

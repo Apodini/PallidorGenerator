@@ -5,9 +5,8 @@ import Yams
 
 /// Entry for Pallidor Generator
 public struct PallidorGenerator {
-    
     /// Parsed open api specification from OpenAPIKit
-    var resolvedDocument : ResolvedDocument
+    var resolvedDocument: ResolvedDocument
     
     
     /// Initializes the Pallidor Generator
@@ -27,13 +26,12 @@ public struct PallidorGenerator {
     /// - Throws: Error if writing files fails
     /// - Returns: List of file URLs from generated code
     public func generate(target path: Path, package name: String) throws -> [URL] {
-        
         let modelPath = path + Path("\(name)/Sources/\(name)/Models")
         let apiPath = path + Path("\(name)/Sources/\(name)/APIs")
         
         var filePaths = [URL]()
         
-        let servers = resolvedDocument.allServers.map({$0.urlTemplate.absoluteString})
+        let servers = resolvedDocument.allServers.map { $0.urlTemplate.absoluteString }
         
         TypeAliases.parse(resolvedDoc: resolvedDocument)
         
