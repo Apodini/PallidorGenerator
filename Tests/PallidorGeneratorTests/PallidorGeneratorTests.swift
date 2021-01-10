@@ -9,7 +9,7 @@ final class PallidorGeneratorTests: XCTestCase {
     func testGenerateErrorModel() {
         initSUT(resource: .lufthansa)
         if let errorType = OpenAPIErrorModel.errorTypes.first {
-            XCTAssertEqual(errorType, "ErrorResponse")
+            XCTAssertEqual(errorType, "_ErrorResponse")
         } else {
             XCTFail("No error type found")
         }

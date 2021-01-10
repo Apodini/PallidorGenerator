@@ -27,7 +27,7 @@ struct OpenAPIErrorModel: CustomStringConvertible {
             enum _OpenAPIError : Error {
             
             \(OpenAPIErrorModel.errorTypes
-                .map { "case response\($0.replaceBrackets.normalized)Error(Int, \($0.replaceBrackets.normalized))" }
+                .map { "case response\($0.replaceBrackets.normalized.removePrefix)Error(Int, \($0.replaceBrackets))" }
                 .joined(separator: "\n"))
                 case urlError(URLError)
             }
@@ -37,6 +37,7 @@ struct OpenAPIErrorModel: CustomStringConvertible {
                 case canNotEncodeOfType(Codable.Type)
             }
             // sourcery:end
+
             """
     }
 }

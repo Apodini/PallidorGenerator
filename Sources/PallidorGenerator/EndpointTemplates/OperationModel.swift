@@ -231,7 +231,7 @@ authorization: HTTPAuthorization\(
                 .skipEmptyJoined(separator: "\n") : ""
             return """
             \(comment)
-            static func \(operationId)\(isGeneric ? "<T : Codable>" : "")(\(parametersString.skipEmptyJoined(separator: ", ")))\(!parameterGuards.isEmpty ? " throws" : "") -> AnyPublisher<\(isGeneric ? "\(successType)<T>" : successType), Error> {
+            static func \(operationId)\(isGeneric ? "<T : Codable>" : "")(\(parametersString.skipEmptyJoined(separator: ", "))) -> AnyPublisher<\(isGeneric ? "\(successType)<T>" : successType), Error> {
             \(parameters != nil &&
                 // Nil checked in previous statement
                 // swiftlint:disable:next force_unwrapping

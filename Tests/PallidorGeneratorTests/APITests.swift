@@ -89,6 +89,11 @@ class APITests: XCTestCase {
         }
     }
     
+    func testParseOAIErrorEnum() {
+        initSUT(resource: .petstore_unmodified)
+        XCTAssertEqual(OpenAPIErrorModel().description, readResult(.OpenAPIErrorModel))
+    }
+    
     private func initSUT(resource: Resources) {
         guard let apiSpec = readResource(resource) else {
             fatalError("Specification could not be retrieved.")

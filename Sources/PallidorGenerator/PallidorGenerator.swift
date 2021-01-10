@@ -18,6 +18,18 @@ public struct PallidorGenerator {
         self.resolvedDocument = try document.locallyDereferenced().resolved()
     }
     
+    /// Initializes the Pallidor Generator
+    /// - Parameter content: Content of the OpenAPI specification
+    /// - Throws: Error if Document cannot be decoded or is malformed
+    public init(specification content: String) throws {
+        let decoder = JSONDecoder()
+        guard let data = content.data(using: .utf8) else {
+            fatalError("Specification content could not be read.")
+        }
+        let document = try decoder.decode(OpenAPI.Document.self, from: data)
+        self.resolvedDocument = try document.locallyDereferenced().resolved()
+    }
+    
     
     /// Generates the library code
     /// - Parameters:
