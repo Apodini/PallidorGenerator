@@ -28,7 +28,7 @@ This library requires at least Swift 5.3 and macOS 10.15.
 ## Integration
 To integrate the `PallidorGenerator` library in your SwiftPM project, add the following line to the dependencies in your `Package.swift` file:
 ```swift
-.package(url: "https://github.com/Apodini/PallidorGenerator.git", .branch("master"))
+.package(url: "https://github.com/Apodini/PallidorGenerator.git", .branch("develop"))
 ```
 Since `PallidorGenerator` is currently under active development, there is no guarantee for source-stability.
 
