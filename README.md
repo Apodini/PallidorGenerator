@@ -28,14 +28,14 @@ This library requires at least Swift 5.3 and macOS 10.15.
 ## Integration
 To integrate the `PallidorGenerator` library in your SwiftPM project, add the following line to the dependencies in your `Package.swift` file:
 ```swift
-.package(url: "https://github.com/tum-aweink/PallidorGenerator.git", .branch("master"))
+.package(url: "https://github.com/Apodini/PallidorGenerator.git", .branch("master"))
 ```
 Since `PallidorGenerator` is currently under active development, there is no guarantee for source-stability.
 
 ## Usage
-To get started with `PallidorGenerator` you first need to create an instance of it, providing the path to the directory in which the source files are located, as well as the path to the location of the migration guide:
+To get started with `PallidorGenerator` you first need to create an instance of it, providing the path to the directory in which the source files are located, as well as the content of the OpenAPI specification (v3):
 ```swift
-var specification : URL = ...
+var specification : String = ...
 let generator = try PallidorGenerator(specification: specification)
 ```
 To start generating the OpenAPI library, you need to call the `generate()` method, providing a `Path` to the target directory where the generated files should be located and a `name` for the package.
