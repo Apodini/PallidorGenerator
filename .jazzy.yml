@@ -3,5 +3,6 @@ author: tum-aweink
 theme: fullwidth
 output: ./docs
 documentation: ./*.md
+min-acl: internal
 author_url: https://github.com/tum-aweink
-github_url: https://github.com/tum-aweink/PallidorGenerator
+github_url: https://github.com/Apodini/PallidorGenerator
